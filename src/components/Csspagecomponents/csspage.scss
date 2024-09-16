@@ -1,0 +1,42 @@
+.css-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .tags {
+        margin-top: 40px;
+        font-size: 24px;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    .table-container {
+        margin-top: 20px;
+        overflow-x: auto;
+    }
+
+    .tags-table,table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 40px;
+
+        th,
+        td {
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            text-align: left;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+    }
+}

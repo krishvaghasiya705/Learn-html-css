@@ -28,7 +28,7 @@
     .codee-runner-layout {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        height: 400px;
+        height: calc(100vh - 84px);
         gap: 20px;
 
         @media (max-width:768px) {

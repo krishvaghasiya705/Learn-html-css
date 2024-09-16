@@ -1,17 +1,24 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import './Editorpage.scss';
 
 function Editorpagecompo() {
-    const [code, setCode] = useState('');
+    const location = useLocation();
+    const [code, setCode] = useState(location.state?.code || '');
     const [iframeSrc, setIframeSrc] = useState('');
     const [codeType, setCodeType] = useState('html');
+
+    useEffect(() => {
+        if (location.state?.code) {
+            setCode(location.state.code);
+        }
+    }, [location.state?.code]);
 
     const handleRunCode = useCallback(() => {
         let htmlCode = '';
         let cssCode = '';
         let jsCode = '';
 
-        // Split the code based on the selected type
         if (codeType === 'htmlcss') {
             const [html, css] = code.split('/* CSS */');
             htmlCode = html || '';
@@ -34,24 +41,28 @@ function Editorpagecompo() {
             htmlCode = code;
         }
 
-        const blob = new Blob([`
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <style>${cssCode}</style>
-            </head>
-            <body>
-                ${htmlCode}
-                <script>${jsCode}</script>
-            </body>
-            </html>
-        `], { type: 'text/html' });
+        const blob = new Blob(
+            [
+                `<!DOCTYPE html>
+                <html>
+                <head>
+                    <style>${cssCode}</style>
+                </head>
+                <body>
+                    ${htmlCode}
+                    <script>${jsCode}</script>
+                </body>
+                </html>`
+            ],
+            { type: 'text/html' }
+        );
 
         const url = URL.createObjectURL(blob);
         setIframeSrc(url);
     }, [code, codeType]);
 
     const convertScssToCss = (scss) => {
+        // Implement SCSS to CSS conversion if needed
         return scss;
     };
 
@@ -59,96 +70,96 @@ function Editorpagecompo() {
         let templateCode = '';
         if (type === 'html') {
             templateCode = `<!DOCTYPE html>
-<html>
-<head>
-    <title>Document</title>
-</head>
-<body>
-    <h1>Hello World</h1>
-</body>
-</html>`;
+            <html>
+            <head>
+                <title>Document</title>
+            </head>
+            <body>
+                <h1>Hello World</h1>
+            </body>
+            </html>`;
         } else if (type === 'htmlcss') {
             templateCode = `<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        /* CSS */
-        body {
-            font-family: Arial, sans-serif;
-        }
-        h1 {
-            color: blue;
-        }
-    </style>
-</head>
-<body>
-    <h1>Hello World</h1>
-</body>
-</html>`;
+            <html>
+            <head>
+                <style>
+                    /* CSS */
+                    body {
+                        font-family: Arial, sans-serif;
+                    }
+                    h1 {
+                        color: blue;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Hello World</h1>
+            </body>
+            </html>`;
         } else if (type === 'htmlscss') {
             templateCode = `<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        /* SCSS */
-        $primary-color: red;
-        body {
-            font-family: Arial, sans-serif;
-        }
-        h1 {
-            color: $primary-color;
-        }
-    </style>
-</head>
-<body>
-    <h1>Hello World</h1>
-</body>
-</html>`;
+            <html>
+            <head>
+                <style>
+                    /* SCSS */
+                    $primary-color: red;
+                    body {
+                        font-family: Arial, sans-serif;
+                    }
+                    h1 {
+                        color: $primary-color;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Hello World</h1>
+            </body>
+            </html>`;
         } else if (type === 'htmlcssjs') {
             templateCode = `<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        /* CSS */
-        body {
-            font-family: Arial, sans-serif;
-        }
-        h1 {
-            color: green;
-        }
-    </style>
-</head>
-<body>
-    <h1>Hello World</h1>
-    <script>
-        // JS
-        console.log('Hello World');
-    </script>
-</body>
-</html>`;
+            <html>
+            <head>
+                <style>
+                    /* CSS */
+                    body {
+                        font-family: Arial, sans-serif;
+                    }
+                    h1 {
+                        color: green;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Hello World</h1>
+                <script>
+                    // JS
+                    console.log('Hello World');
+                </script>
+            </body>
+            </html>`;
         } else if (type === 'htmlscssjs') {
             templateCode = `<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        /* SCSS */
-        $primary-color: yellow;
-        body {
-            font-family: Arial, sans-serif;
-        }
-        h1 {
-            color: $primary-color;
-        }
-    </style>
-</head>
-<body>
-    <h1>Hello World</h1>
-    <script>
-        // JS
-        console.log('Hello World');
-    </script>
-</body>
-</html>`;
+            <html>
+            <head>
+                <style>
+                    /* SCSS */
+                    $primary-color: yellow;
+                    body {
+                        font-family: Arial, sans-serif;
+                    }
+                    h1 {
+                        color: $primary-color;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Hello World</h1>
+                <script>
+                    // JS
+                    console.log('Hello World');
+                </script>
+            </body>
+            </html>`;
         }
 
         setCode(templateCode);
@@ -171,15 +182,15 @@ function Editorpagecompo() {
 
     return (
         <div className="code-runner">
-            <div className='code-runners-selector-button'>
+            <div className="code-runners-selector-button">
                 <button onClick={() => setCodeTemplate('html')}>HTML</button>
                 <button onClick={() => setCodeTemplate('htmlcss')}>HTML/CSS</button>
                 <button onClick={() => setCodeTemplate('htmlscss')}>HTML/SCSS</button>
                 <button onClick={() => setCodeTemplate('htmlcssjs')}>HTML/CSS/JS</button>
                 <button onClick={() => setCodeTemplate('htmlscssjs')}>HTML/SCSS/JS</button>
-                <button onClick={handleRunCode} className='Runbutton'>Run Code</button>
+                <button onClick={handleRunCode} className="Runbutton">Run Code</button>
             </div>
-            <div className='codee-runner-layout'>
+            <div className="codee-runner-layout">
                 <div className="editor">
                     <textarea
                         value={code}

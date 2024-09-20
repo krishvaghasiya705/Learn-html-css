@@ -1,3 +1,5 @@
+@import "../../Styles/theme.scss";
+
 .tags-container {
     padding: 20px;
     font-family: Arial, sans-serif;
@@ -66,7 +68,7 @@
             height: 40px;
             padding: 10px;
             transition: .2s linear;
-            border: 2.5px solid black;
+            border: 2.5px solid var(--colorblack);
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -75,8 +77,8 @@
 
         .search-input:focus {
             outline: none;
-            border: 0.5px solid black;
-            box-shadow: -5px -5px 0px black;
+            border: 0.5px solid var(--colorblack);
+            box-shadow: -5px -5px 0px var(--colorblack);
         }
 
         .input-container:hover>.icon {
@@ -106,7 +108,7 @@
             height: 100%;
             padding: 10px;
             transition: 0.2s linear;
-            border: 2.5px solid black;
+            border: 2.5px solid var(--colorblack);
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -118,8 +120,8 @@
 
         button:focus {
             outline: none;
-            border: 0.5px solid black;
-            box-shadow: -5px -5px 0px black;
+            border: 0.5px solid var(--colorblack);
+            box-shadow: -5px -5px 0px var(--colorblack);
         }
     }
 }

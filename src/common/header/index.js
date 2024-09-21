@@ -14,6 +14,7 @@ function Header() {
   const [imageUrl, setImageUrl] = useState(defaultUser.imageUrl);
   const [loadingImage, setLoadingImage] = useState(false);
   const [email, setEmail] = useState('');
+  const [bgColor, setBgColor] = useState('');
 
   useEffect(() => {
     const storedFirstName = localStorage.getItem('firstName');
@@ -28,6 +29,19 @@ function Header() {
     if (storedImageUrl) setImageUrl(storedImageUrl);
     if (storedEmail) setEmail(storedEmail);
   }, []);
+
+  useEffect(() => {
+    const getRandomColor = () => {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    };
+
+    setBgColor(getRandomColor());
+  }, [firstName, lastName, imageUrl]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -102,7 +116,7 @@ function Header() {
       <div>
         <div className='user-details'>
           <div className='user'>
-            <div className='user-icon'>
+            <div className='user-icon' style={{ backgroundColor: bgColor }}>
               {imageUrl ? (
                 <img
                   src={loadingImage ? 'default-image-url.png' : imageUrl}

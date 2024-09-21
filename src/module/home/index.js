@@ -23,13 +23,14 @@ export default function Home() {
       />
       {activeToggle === 'html' && (
         <HTMLTagsTable
-          searchQuery={searchQuery}
+          searchQuery={searchQuery}   
           handleSearchChange={handleSearchChange}
         />
       )}
       {activeToggle === 'css' && (
         <Csspagecompo searchQuery={searchQuery} />
       )}
+
     </>
   );
 }

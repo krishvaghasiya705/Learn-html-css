@@ -66,7 +66,7 @@
             height: 40px;
             padding: 10px;
             transition: .2s linear;
-            border: 2.5px solid var(--colorblack);
+            border: 2.5px solid black;
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -75,8 +75,8 @@
 
         .search-input:focus {
             outline: none;
-            border: 0.5px solid var(--colorblack);
-            box-shadow: -5px -5px 0px var(--colorblack);
+            border: 0.5px solid black;
+            box-shadow: -5px -5px 0px black;
         }
 
         .input-container:hover>.icon {
@@ -106,7 +106,7 @@
             height: 100%;
             padding: 10px;
             transition: 0.2s linear;
-            border: 2.5px solid var(--colorblack);
+            border: 2.5px solid black;
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -118,8 +118,8 @@
 
         button:focus {
             outline: none;
-            border: 0.5px solid var(--colorblack);
-            box-shadow: -5px -5px 0px var(--colorblack);
+            border: 0.5px solid black;
+            box-shadow: -5px -5px 0px black;
         }
     }
 }

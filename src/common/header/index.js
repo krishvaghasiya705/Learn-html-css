@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import "./header.scss";
 import { Link } from 'react-router-dom';
+import { useUserContext } from '../../components/usercontext/UserContext';
+import "./header.scss";
 
 function Header() {
   const defaultUser = { firstName: "Default", lastName: "User", userType: "Guest", imageUrl: "" };
+  const { addUser } = useUserContext();
 
   const [showForm, setShowForm] = useState(false);
   const [firstName, setFirstName] = useState(defaultUser.firstName);
@@ -35,9 +37,8 @@ function Header() {
     const newImage = event.target.image.files[0];
 
     let newUserType = "Guest";
-    const adminEmails = ["pr.vaghasiyakrish@gmail.com", "kvaghasiya705@gmail.com"];
+    const adminEmails = ["kvaghasiya705@gmail.com", "pr.vaghasiyakrish@gmail.com"];
 
-    // Check if the email belongs to an admin
     if (adminEmails.includes(newEmail)) {
       newUserType = "Admin";
     } else if (newFirstName && newLastName) {
@@ -45,6 +46,10 @@ function Header() {
     }
 
     if (newFirstName && newLastName) {
+      const newUserData = { firstName: newFirstName, lastName: newLastName, userType: newUserType, email: newEmail, imageUrl: imageUrl };
+
+      addUser(newUserData);
+
       setFirstName(newFirstName);
       setLastName(newLastName);
       setUserType(newUserType);
@@ -88,6 +93,7 @@ function Header() {
       <nav>
         <Link to="/">Home</Link>/
         <Link to="/editorpage">Editorpage</Link>
+        {userType === "Admin" && <Link to="/adminpanel">Admin Panel</Link>}
       </nav>
       <div>
         <div className='user-details'>

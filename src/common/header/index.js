@@ -48,6 +48,10 @@ function Header() {
     if (newFirstName && newLastName) {
       const newUserData = { firstName: newFirstName, lastName: newLastName, userType: newUserType, email: newEmail, imageUrl: imageUrl };
 
+      const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+      existingUsers.push(newUserData);
+      localStorage.setItem('users', JSON.stringify(existingUsers));
+
       addUser(newUserData);
 
       setFirstName(newFirstName);
@@ -92,7 +96,7 @@ function Header() {
     <header>
       <nav>
         <Link to="/">Home</Link>/
-        <Link to="/editorpage">Editorpage</Link>
+        <Link to="/editorpage">Editorpage</Link>/
         {userType === "Admin" && <Link to="/adminpanel">Admin Panel</Link>}
       </nav>
       <div>

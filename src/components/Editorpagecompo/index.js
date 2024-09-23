@@ -62,7 +62,6 @@ function Editorpagecompo() {
     }, [code, codeType]);
 
     const convertScssToCss = (scss) => {
-        // Implement SCSS to CSS conversion if needed
         return scss;
     };
 

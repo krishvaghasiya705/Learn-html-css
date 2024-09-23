@@ -7,6 +7,15 @@ function Header() {
   const defaultUser = { firstName: "Default", lastName: "User", userType: "Guest", imageUrl: "" };
   const { addUser } = useUserContext();
 
+  const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
   const [showForm, setShowForm] = useState(false);
   const [firstName, setFirstName] = useState(defaultUser.firstName);
   const [lastName, setLastName] = useState(defaultUser.lastName);
@@ -14,7 +23,7 @@ function Header() {
   const [imageUrl, setImageUrl] = useState(defaultUser.imageUrl);
   const [loadingImage, setLoadingImage] = useState(false);
   const [email, setEmail] = useState('');
-  const [bgColor, setBgColor] = useState('');
+  const [bgColor, setBgColor] = useState(''); // Start with an empty color
 
   useEffect(() => {
     const storedFirstName = localStorage.getItem('firstName');
@@ -29,19 +38,6 @@ function Header() {
     if (storedImageUrl) setImageUrl(storedImageUrl);
     if (storedEmail) setEmail(storedEmail);
   }, []);
-
-  useEffect(() => {
-    const getRandomColor = () => {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    };
-
-    setBgColor(getRandomColor());
-  }, [firstName, lastName, imageUrl]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -72,6 +68,9 @@ function Header() {
       setLastName(newLastName);
       setUserType(newUserType);
       setEmail(newEmail);
+
+      // Change background color only on user data change
+      setBgColor(getRandomColor());
 
       localStorage.setItem('firstName', newFirstName);
       localStorage.setItem('lastName', newLastName);
@@ -110,13 +109,13 @@ function Header() {
     <header>
       <nav>
         <Link to="/">Home</Link>/
-        <Link to="/editorpage">Editorpage</Link>/
+        <Link to="/editorpage">Editor page</Link>/
         {userType === "Admin" && <Link to="/adminpanel">Admin Panel</Link>}
       </nav>
       <div>
         <div className='user-details'>
           <div className='user'>
-            <div className='user-icon' style={{ backgroundColor: bgColor }}>
+            <div className='user-icon' style={{ backgroundColor: bgColor || getRandomColor() }}>
               {imageUrl ? (
                 <img
                   src={loadingImage ? 'default-image-url.png' : imageUrl}
